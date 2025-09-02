@@ -1,0 +1,3 @@
+maxExtraPieces=1
+redZone1=13
+redZone2=13.6
