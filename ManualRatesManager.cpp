@@ -1,13 +1,13 @@
-#include "SectionRatesManager.h"
+#include "ManualRatesManager.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
 
-SectionRatesManager::SectionRatesManager(std::vector<SectionSummary>& summaries)
+ManualRatesManager::ManualRatesManager(std::vector<SectionSummary>& summaries)
     : sections(summaries) {}
 
 // Step 1: User enters rates
-void SectionRatesManager::inputRatesFromUser() {
+void ManualRatesManager::inputRatesFromUser() {
     if (sections.empty()) {
         std::cout << "⚠️ No sections to rate.\n";
         return;
@@ -33,7 +33,7 @@ void SectionRatesManager::inputRatesFromUser() {
 }
 
 // Step 2: Allow editing by line number (repeatable)
-void SectionRatesManager::editRateByLineNumber() {
+void ManualRatesManager::editRateByLineNumber() {
     if (sections.empty()) return;
 
     while (true) {
@@ -70,7 +70,7 @@ void SectionRatesManager::editRateByLineNumber() {
 }
 
 // Step 3: Compute totals & store back into SectionSummary.totalPrice
-double SectionRatesManager::computeAndStoreTotals() {
+double ManualRatesManager::computeAndStoreTotals() {
     grand = 0.0;  // reset stored grand each time
     double grandTotal = 0.0;
 
@@ -92,7 +92,7 @@ double SectionRatesManager::computeAndStoreTotals() {
 
 
 // Step 4: Print final table
-void SectionRatesManager::printFinalSummaryTable() const {
+void ManualRatesManager::printFinalSummaryTable() const {
     if (sections.empty()) {
         std::cout << "⚠️ Nothing to show.\n";
         return;
@@ -135,6 +135,6 @@ void SectionRatesManager::printFinalSummaryTable() const {
     std::cout << "-------------------------------------------------------------\n";
     std::cout << "Grand Total Aluminum Cost = Rs. " << static_cast<int>(grand) << "\n";
 }
-double SectionRatesManager::getTotalAluminiumCost() const {
+double ManualRatesManager::getTotalAluminiumCost() const {
     return grand;  // ye final bill return karega
 }

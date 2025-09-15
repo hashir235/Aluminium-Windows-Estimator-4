@@ -4,9 +4,12 @@
 EstimateLengthManager estimator;
 FinalSummaryManager summaryManager;
 FinalCostCalculator finalEstimator;
-SectionRatesManager ratesManager(estimator.getSummaries()); 
+ManualRatesManager ratesManager(estimator.getSummaries()); 
+AutoRatesManager autoRatesManager;
 
 int main() {
+  //  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     SettingsManagerA::getInstance().loadFromFile("section_settings.txt");
     
       // Store all created windows here
@@ -71,10 +74,12 @@ int main() {
                   }
 
             case 2:
-               addOrEditWindowsLoop(windows, windowTypes, estimator, ratesManager, summaryManager, finalEstimator);
+               addOrEditWindowsLoop(windows, windowTypes, estimator, ratesManager,
+                                   summaryManager, finalEstimator, autoRatesManager);
                 break;
             case 3:
-                showFinalSummary(windows, estimator, ratesManager, summaryManager, finalEstimator);
+              showFinalSummary( windows, estimator, ratesManager, summaryManager,
+                               finalEstimator, autoRatesManager );
                 break;
             case 4:
                 addWindowForFabrication();
@@ -89,6 +94,10 @@ int main() {
                 cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
                 cout << "~   Exiting program. Thank you!   ~\n";
                 cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+                std::cout << "\nPress Enter to exit...";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
                 return 0;
         }
     }

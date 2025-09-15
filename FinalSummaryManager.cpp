@@ -39,6 +39,12 @@ void FinalSummaryManager::setGlassColor(const std::string& color) {
     glassColor = color;
 }
 
+void FinalSummaryManager::setAluColor(const std::string& color) {
+    AluColor = color;
+}
+
+
+
 void FinalSummaryManager::setGageNumber(const std::string& gage) {
     gageNumber = gage;
 }
@@ -85,7 +91,6 @@ void FinalSummaryManager::print_qty_sq() const {
                       << " | " << std::fixed << std::setprecision(2) << data.second
                       << "\n";
         }
-        std::cout << "-------------------------------------\n";
     }
     }
 
@@ -116,11 +121,12 @@ int FinalSummaryManager::displayFinalSummary() const {
     std::cout << "=                Final Summary Result               =\n";
     std::cout << "=====================================================\n";
 
-    if (!projectName.empty())  std::cout << " Project     : " << projectName << "\n";
-    if (!location.empty())     std::cout << " Location   : " << location << "\n";
-    if (!phoneNumber.empty())  std::cout << " Phone      : " << phoneNumber << "\n";
-    if (!gageNumber.empty())   std::cout << " Gage Number: " << gageNumber << " mm\n"; 
-    if (!glassColor.empty())   std::cout << " Glass Color: " << glassColor << " \n"; 
+    if (!projectName.empty())  std::cout << " Project        : " << projectName << "\n";
+    if (!location.empty())     std::cout << " Location       : " << location << "\n";
+    if (!phoneNumber.empty())  std::cout << " Phone          : " << phoneNumber << "\n";
+    if (!gageNumber.empty())   std::cout << " Gage Number    : " << gageNumber << " mm\n"; 
+    if (!glassColor.empty())   std::cout << " Glass Color    : " << glassColor << " \n"; 
+    if (!AluColor.empty())   std::cout   << " Aluminium Color: " << AluColor << " \n"; 
 
     print_qty_sq();
 

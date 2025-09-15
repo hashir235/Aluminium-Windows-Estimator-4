@@ -9,6 +9,8 @@ private:
     std::string location;
     std::string phoneNumber;
     std::string glassColor;
+    std::string gageNumber;
+    std::string AluColor;
 
 public:
     FinalCostCalculator();
@@ -21,6 +23,8 @@ public:
     void setLocation(const std::string& loc);
     void setPhoneNumber(const std::string& phone);
     void setGlassColor(const std::string& color);
+    void setGageNumber(const std::string& gage);
+    void setAluColor(const std::string& color);
     
     std::string getProjectName() const;
     std::string getLocation() const;

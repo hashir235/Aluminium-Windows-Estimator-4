@@ -111,9 +111,10 @@ void addOrEditWindowsLoop(
     std::vector<std::unique_ptr<FrameComponent>>& windows,
     std::map<int, std::pair<std::string, std::function<std::unique_ptr<FrameComponent>()>>>& windowTypes,
     EstimateLengthManager& estimator,
-    SectionRatesManager& ratesManager,          // ✅ add this
+    ManualRatesManager& ratesManager,          
     FinalSummaryManager& summaryManager,
-    FinalCostCalculator& finalEstimator        // ✅ add this
+    FinalCostCalculator& finalEstimator ,
+    AutoRatesManager& autoRatesManager       
 ) {
     while (true) {
         // Show window types
@@ -203,7 +204,7 @@ void addOrEditWindowsLoop(
                 deleteWindow(windows, estimator, summaryManager); 
                 break;
             case 4: 
-                showFinalSummary(windows, estimator, ratesManager, summaryManager, finalEstimator);
+                showFinalSummary( windows, estimator, ratesManager, summaryManager, finalEstimator, autoRatesManager );
                 break;
             case 0: 
                 std::cout << "🔙 Going back...\n"; 
@@ -221,9 +222,10 @@ void addOrEditWindowsLoop(
 void showFinalSummary(
     vector<unique_ptr<FrameComponent>>& windows,
     EstimateLengthManager& estimator,
-    SectionRatesManager& ratesManager,
+    ManualRatesManager& ratesManager,
     FinalSummaryManager& summaryManager,
-    FinalCostCalculator& finalEstimator
+    FinalCostCalculator& finalEstimator,
+    AutoRatesManager& autoRatesManager // 👈 Auto manager add
 ) {
     if (windows.empty()) {
         cout << "⚠️ No windows added yet!\n";
@@ -236,59 +238,138 @@ void showFinalSummary(
         // 1. Estimation chalao
         estimator.performEstimation();
 
-        // 2. Section rates input lo
-        ratesManager.inputRatesFromUser();
-        ratesManager.editRateByLineNumber();     // optional correction
-        double grandTotal = ratesManager.computeAndStoreTotals();
-        ratesManager.printFinalSummaryTable();
+        // 2. User ko choice do (Manual ya Auto)
+        int modeChoice;
+        cout << "\nChoose Rate Input Method:\n";
+        cout << "1. Manual Input\n";
+        cout << "2. Auto (CSV File)\n";
+        cout << "Enter choice: ";
+        cin >> modeChoice;
 
-        // 3. Aluminium total ko summary manager me store karo
-        summaryManager.setAluminiumTotal(grandTotal);
+        double grandTotal = 0.0;
 
-        // 4. Baaki general rates input lo
-        finalEstimator.inputRates();
+        if (modeChoice == 1) {
+            // ----- Manual Mode -----
+            ratesManager.inputRatesFromUser();
+            ratesManager.editRateByLineNumber();
+            grandTotal = ratesManager.computeAndStoreTotals();
+            ratesManager.printFinalSummaryTable();
+            autoRatesManager.enableAutoRates(false);
 
-        // 5. Loop for re-estimation / re-entering rates
-        while (true) {
-            int choice = finalEstimator.displayFinalSummary();
-        
-            if (choice == 1) {
-                cout << "\n🆕 Generating a NEW Bill (without re-calculating sections)...\n";
-        
-                // Sirf rates re-enter karna hai
+        } 
+        else if (modeChoice == 2) {
+            
+            // ----- Auto Mode -----
+            if (autoRatesManager.updateRateListFromServer(
+                    "https://raw.githubusercontent.com/hashir235/Al_Ratelist/main/RateList.csv")) 
+            {
+                autoRatesManager.selectOptions(); // user chooses thickness + color
+
+                // sections ko pehle lao
+                auto sections = estimator.getSectionUsage();
+
+                // review & edit allow karo
+                autoRatesManager.reviewAndEditRates(sections);
+
+                // compute totals
+                grandTotal = autoRatesManager.computeAndStoreTotals(sections);
+
+                autoRatesManager.enableAutoRates(true);  // agar user ne auto mode select kiya
+
+                // final table
+                //autoRatesManager.printFinalSummaryTable();
+            } else {
+                cerr << "❌ Failed to fetch rates online! Falling back to Manual mode.\n";
+                modeChoice = 1;
                 ratesManager.inputRatesFromUser();
                 ratesManager.editRateByLineNumber();
-
                 grandTotal = ratesManager.computeAndStoreTotals();
                 ratesManager.printFinalSummaryTable();
+                autoRatesManager.enableAutoRates(false);
+            }
+        }
+        else {
+            cout << "⚠️ Invalid choice! Defaulting to Manual mode.\n";
+            modeChoice = 1;
+            ratesManager.inputRatesFromUser();
+            ratesManager.editRateByLineNumber();
+            grandTotal = ratesManager.computeAndStoreTotals();
+            ratesManager.printFinalSummaryTable();
+            autoRatesManager.enableAutoRates(false);
+
+        }
+
+        // 3. Aluminium total store
+        summaryManager.setAluminiumTotal(grandTotal);
+
+        // 4. Baaki rates input lo
+        finalEstimator.inputRates();
+
+        // 5. Loop for re-estimation
+        while (true) {
+            int choice = finalEstimator.displayFinalSummary();
+
+            if (choice == 1) {
+                cout << "\n🆕 Generating a NEW Bill...\n";
+
+                if (modeChoice == 1) {
+                    // Manual mode
+                    ratesManager.inputRatesFromUser();
+                    ratesManager.editRateByLineNumber();
+                    grandTotal = ratesManager.computeAndStoreTotals();
+                    ratesManager.printFinalSummaryTable();
+                    autoRatesManager.enableAutoRates(false);
+
+                } 
+                else {
+                    // Auto mode (try again online)
+                    if (autoRatesManager.updateRateListFromServer(
+                            "https://raw.githubusercontent.com/hashir235/Al_Ratelist/main/RateList.csv")) 
+                    {
+                        autoRatesManager.selectOptions();
+
+                        auto sections = estimator.getSectionUsage();
+
+                        autoRatesManager.reviewAndEditRates(sections);
+
+                        grandTotal = autoRatesManager.computeAndStoreTotals(sections);
+
+                        autoRatesManager.enableAutoRates(true);  // agar user ne auto mode select kiya
+                        //autoRatesManager.printFinalSummaryTable();
+                    } 
+                    else {
+                        cerr << "❌ Online fetch failed! Switching to Manual.\n";
+                        modeChoice = 1;
+                        ratesManager.inputRatesFromUser();
+                        ratesManager.editRateByLineNumber();
+                        grandTotal = ratesManager.computeAndStoreTotals();
+                        ratesManager.printFinalSummaryTable();
+                        autoRatesManager.enableAutoRates(false);
+
+                    }
+                }
 
                 summaryManager.setAluminiumTotal(grandTotal);
-
                 finalEstimator.inputRates();
-                // 🚫 Yahan dobara displayFinalSummary() call nahi karna
-                // Loop apne aap next iteration me fir se summary dikhayega
             }
-                    else if (choice == 2) {
+            else if (choice == 2) {
                 cout << "\n-- Re-entering Other Rates...\n";
                 finalEstimator.inputRates();
-                // Loop automatic summary fir se show karega
             }
             else if (choice == 0) {
                 cout << "\n-- Going back to Home Menu...\n";
-                break;  // return ki jagah break, taake loop se nikal jaye
+                break;
             }
             else {
                 cout << "⚠️ Invalid choice! Please enter 1, 2, or 0.\n";
             }
         }
 
-            }
-            catch (const std::exception& ex) {
+    } catch (const std::exception& ex) {
         cerr << "❌ Error during final summary: " << ex.what() << "\n";
-            }
-            catch (...) {
+    } catch (...) {
         cerr << "❌ Unknown error occurred during final summary!\n";
-            }
+    }
 }
 
 
@@ -308,9 +389,10 @@ void getCuttingSize() {
 
 void settingsMenu() {
     int option;
-    auto& manager = SettingsManagerA::getInstance();     // Old system (A)
-    auto& managerB = SettingsManagerB::getInstance();   // New system (B)
+    auto& manager = SettingsManagerA::getInstance();      // Old system (A)
+    auto& managerB = SettingsManagerB::getInstance();    // New system (B)
     auto& managerC = SettingsManagerC::getInstance();   // Newest system (C)
+    AutoRatesManager autoRatesManager;  
 
     do {
         cout << "\n🔧 === Section Settings Menu ===\n"
@@ -507,6 +589,8 @@ void settingsMenu() {
                 break;
             }
 
+
+
             default:
                 std::cout << "❌ Invalid choice! Try again.\n";
             }
@@ -525,3 +609,4 @@ void settingsMenu() {
         }
     } while (option != 0);
 }
+

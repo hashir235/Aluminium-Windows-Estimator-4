@@ -107,7 +107,7 @@ void EstimateLengthManager::printPerSectionBreakdown() const {
         }
     }
 
-    std::cout << "\n================================ Length Optimization =================================\n";
+    std::cout << "\n====================== Length Optimization ========================\n";
 }
 
 
@@ -390,6 +390,10 @@ const std::vector<SectionSummary>& EstimateLengthManager::getSummaries() const {
 }
 
 std::vector<SectionSummary>& EstimateLengthManager::getSummaries() {
+    return sectionSummaries;
+}
+// Add this at the end of the cpp file
+std::vector<SectionSummary>& EstimateLengthManager::getSectionUsage() {
     return sectionSummaries;
 }
 

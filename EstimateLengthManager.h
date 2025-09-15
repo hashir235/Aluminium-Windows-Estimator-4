@@ -55,4 +55,7 @@ public:
     // ✅ Accessor for section summaries
     const std::vector<SectionSummary>& getSummaries() const;
     std::vector<SectionSummary>& getSummaries();
+
+    // Add this in the class definition
+    std::vector<SectionSummary>& getSectionUsage();
 };

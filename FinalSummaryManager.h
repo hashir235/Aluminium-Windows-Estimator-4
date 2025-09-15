@@ -24,6 +24,7 @@ public:
     void setPhoneNumber(const std::string& phone);
     void setGlassColor(const std::string& color);
     void setGageNumber(const std::string& gage);
+    void setAluColor(const std::string& color);
     std::string getGageNumber() const;
      
     // 🪟 Add a window with label, area, and count
@@ -47,6 +48,7 @@ private:
     std::string phoneNumber;
     std::string gageNumber; 
     std::string glassColor; 
+    std::string AluColor;
 
     std::vector<std::pair<std::string, double>> windows;             // ✅ OK
     std::map<std::string, int> windowCounts;                         // ✅ OK

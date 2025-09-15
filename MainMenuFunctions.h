@@ -17,7 +17,8 @@
 #include "SettingsManagerC.h" 
 #include "WindowManager.h"  
 #include "WindowTypes.h"
-#include "SectionRatesManager.h"
+#include "ManualRatesManager.h"
+#include "AutoRatesManager.h"
 
 // Window type header files
 #include "S_Win.h"
@@ -40,9 +41,10 @@ void addOrEditWindowsLoop(
     vector<unique_ptr<FrameComponent>>& windows,
     map<int, pair<string, function<unique_ptr<FrameComponent>()>>>& windowTypes,
     EstimateLengthManager& estimator,
-    SectionRatesManager& ratesManager,
+    ManualRatesManager& ratesManager,
     FinalSummaryManager& summaryManager,
-    FinalCostCalculator& finalEstimator
+    FinalCostCalculator& finalEstimator,
+    AutoRatesManager& autoRatesManager
 );
 
 
@@ -50,10 +52,12 @@ void addOrEditWindowsLoop(
 void showFinalSummary(
     vector<unique_ptr<FrameComponent>>& windows,
     EstimateLengthManager& estimator,
-    SectionRatesManager& ratesManager,
+    ManualRatesManager& ratesManager,
     FinalSummaryManager& summaryManager,
-    FinalCostCalculator& finalEstimator
+    FinalCostCalculator& finalEstimator,
+    AutoRatesManager& autoRatesManager
 );
+
 
 
 // Case 3: Add Window for Fabrication

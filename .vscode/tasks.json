@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build & Run WE Folder 16",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/A_Win.cpp",
+                "${workspaceFolder}/D_Win.cpp",
+                "${workspaceFolder}/F_Win.cpp",
+                "${workspaceFolder}/FC_Win.cpp",
+                "${workspaceFolder}/O_Win.cpp",
+                "${workspaceFolder}/S_Win.cpp",
+                "${workspaceFolder}/SC_Win.cpp",
+                "${workspaceFolder}/SCM_Win.cpp",
+                "${workspaceFolder}/SG_Win.cpp",
+                "${workspaceFolder}/SGM_Win.cpp",
+                "${workspaceFolder}/SM_Win.cpp",
+                "${workspaceFolder}/WindowManager.cpp",
+                "${workspaceFolder}/WindowTypes.cpp",
+                "${workspaceFolder}/AutoRatesManager.cpp",
+                "${workspaceFolder}/EstimateLengthManager.cpp",
+                "${workspaceFolder}/FinalCostCalculator.cpp",
+                "${workspaceFolder}/FinalSummaryManager.cpp",
+                "${workspaceFolder}/MainMenuFunctions.cpp",
+                "${workspaceFolder}/ManualRatesManager.cpp",
+                "${workspaceFolder}/SettingsManagerA.cpp",
+                "${workspaceFolder}/SettingsManagerB.cpp",
+                "${workspaceFolder}/SettingsManagerC.cpp",
+                "-std=c++17",
+                "-o",
+                "${workspaceFolder}/main.exe",
+                "-I",
+                "${workspaceFolder}/vcpkg/installed/x64-windows/include",
+                "-L",
+                "${workspaceFolder}/vcpkg/installed/x64-windows/lib",
+                "-lcurl"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Run Program",
+            "type": "shell",
+            "command": "${workspaceFolder}/main.exe",
+            "dependsOn": "Build & Run WE Folder 16",
+            "group": "none"
+        }
+    ]
+}

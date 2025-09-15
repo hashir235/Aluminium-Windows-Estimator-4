@@ -6,9 +6,9 @@
 #include <vector>
 #include "EstimateLengthResult.h" // for SectionSummary
 
-class SectionRatesManager {
+class ManualRatesManager {
 public:
-    explicit SectionRatesManager(std::vector<SectionSummary>& summaries);
+    explicit ManualRatesManager(std::vector<SectionSummary>& summaries);
 
     void inputRatesFromUser();          // ask rates line-by-line
     void editRateByLineNumber();        // fix a specific line (0 = skip)
