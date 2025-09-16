@@ -225,7 +225,7 @@ void showFinalSummary(
     ManualRatesManager& ratesManager,
     FinalSummaryManager& summaryManager,
     FinalCostCalculator& finalEstimator,
-    AutoRatesManager& autoRatesManager // 👈 Auto manager add
+    AutoRatesManager& autoRatesManager 
 ) {
     if (windows.empty()) {
         cout << "⚠️ No windows added yet!\n";
@@ -378,7 +378,12 @@ void showFinalSummary(
 ////////////////////////////////////////////////////////////////////////////////
 
 void addWindowForFabrication() {
+
     cout << "🛠 Add Window for Fabrication feature is coming soon!\n";
+}
+
+void getMaterialNeeded() {
+    cout << "🧾 Get Material Needed feature is coming soon!\n";
 }
 
 void getCuttingSize() {

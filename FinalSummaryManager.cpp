@@ -192,7 +192,6 @@ while (true) {
     }
 }
 
-
     return navChoice;
 }
 

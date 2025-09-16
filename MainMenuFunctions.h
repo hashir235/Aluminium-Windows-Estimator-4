@@ -63,6 +63,8 @@ void showFinalSummary(
 // Case 3: Add Window for Fabrication
 void addWindowForFabrication();
 
+void getMaterialNeeded();
+
 // Case 4: Get Cutting Size
 void getCuttingSize();
 
