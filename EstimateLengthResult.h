@@ -6,25 +6,34 @@
 #include <vector>
 #include "GroupResult.h"
 
-struct LengthGroup {
-    double stockLength;
-    std::vector<std::pair<std::string,double>> items;
-    double wastage;
+struct CutInfo {
+    std::string windowName;
+    int windowNo;
+    std::string dimension;
+    double lengthFt;
+};
+
+struct OptimizedGroup {
+    std::string sectionName;
+    double stockLenFt;
+    double wastageFt;
+    bool offcut;
+    std::vector<CutInfo> cuts;
 };
 
 struct SectionSummary {
     std::string sectionName;
-    std::vector<double> usedLengths; // e.g. {19, 17, 15}
-    double totalLength = 0.0;   // total length (ft)
-    double totalPrice  = 0.0;   // total price (ft × rate)
+    std::vector<double> usedLengths;
+    double totalLength = 0.0;
+    double totalPrice  = 0.0;
 };
 
-
-// ✅ Final structure passed from EstimateLengthManager to FinalSummaryManager
 struct EstimateLengthResult {
-    std::unordered_map<std::string, SectionSummary> sectionSummaries;
+    // 🔹 Raw grouped cutting data
+    std::map<std::string, std::vector<OptimizedGroup>> sectionGroups;
 
-    // ✅ Full grouped display data (like printable view)
+    // 🔹 Summaries for display
+    std::unordered_map<std::string, SectionSummary> sectionSummaries;
     std::unordered_map<std::string, std::vector<std::string>> groupedDisplayData;
 
     // --- GETTERS ---

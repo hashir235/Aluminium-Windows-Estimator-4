@@ -22,8 +22,8 @@ EstimateLengthManager::EstimateLengthManager() {}
 
 
 void EstimateLengthManager::performEstimation() {
-    printPerSectionBreakdown();         // Step 1: Print per-section breakdown 
-    groupAndOptimizeSections();         // Step 2: Group and optimize sections
+    printPerSectionBreakdown();                                       // Step 1: Print per-section breakdown 
+     groupedSectionSummaries = groupAndOptimizeSections();           // Step 2: Group and optimize sections
 }
 
 void EstimateLengthManager::addWindowSections(const std::string& windowLabel, const SectionMap& sections) {
@@ -338,6 +338,40 @@ EstimateLengthResult EstimateLengthManager::groupAndOptimizeSections() {
                       << "ft = " << joined
                       << " | Wastage: " << std::setprecision(1) << wastage << "ft\n";
 
+                      // 🔹 Save structured data for getCuttingSize()
+                      OptimizedGroup og;
+                      og.sectionName = sectionName;
+                      og.stockLenFt  = g.stockLen;
+                      og.wastageFt   = wastage;
+                      og.offcut      = g.offcut;
+                      
+                      for (auto& piece : g.chosen) {
+                          std::string label = piece.first;
+                          double lenFt = piece.second;
+                          
+                          std::string windowName, dimension;
+                          int windowNo = 0;
+                          
+                          size_t pos1 = label.find(" #");
+                          if (pos1 != std::string::npos) {
+                              windowName = label.substr(0, pos1);
+                              
+                              size_t pos2 = label.find("->", pos1);
+                              if (pos2 != std::string::npos) {
+                                  std::string numPart = label.substr(pos1 + 2, pos2 - (pos1 + 2));
+                                  windowNo = std::stoi(numPart);
+                                  dimension = label.substr(pos2 + 3);
+                                }
+                            } else {
+                                dimension = label; // fallback
+                            }
+                            
+                            og.cuts.push_back({windowName, windowNo, dimension, lenFt});
+                        }
+                        
+                        result.sectionGroups[sectionName].push_back(std::move(og));
+
+
             totalLength += g.stockLen;
             usedLengths.push_back(g.stockLen);
         }
@@ -392,9 +426,13 @@ const std::vector<SectionSummary>& EstimateLengthManager::getSummaries() const {
 std::vector<SectionSummary>& EstimateLengthManager::getSummaries() {
     return sectionSummaries;
 }
-// Add this at the end of the cpp file
-std::vector<SectionSummary>& EstimateLengthManager::getSectionUsage() {
-    return sectionSummaries;
+
+const EstimateLengthResult& EstimateLengthManager::getGroupedSectionSummaries() const {
+    return groupedSectionSummaries;
+}
+
+bool EstimateLengthManager::hasOptimizedData() const {
+    return !groupedSectionSummaries.sectionGroups.empty();   // ✅
 }
 
 

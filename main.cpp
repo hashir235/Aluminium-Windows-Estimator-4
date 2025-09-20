@@ -1,4 +1,5 @@
-#include "MainMenuFunctions.h"
+#include "MainMenuEstimator.h"
+#include "MainMenuFabricator.h"
 
 // 🔹 Global Managers
 EstimateLengthManager estimator;
@@ -42,17 +43,17 @@ int main() {
                     estimator.clearAllData();  // ✅ custom function
 
                     // Reset all window counters
-                    S_Win::resetWindowCount();
-                    SM_Win::resetWindowCount();
-                    SG_Win::resetWindowCount();
-                    SGM_Win::resetWindowCount();
-                    SC_Win::resetWindowCount();
-                    SCM_Win::resetWindowCount();
-                    F_Win::resetWindowCount();
-                    FC_Win::resetWindowCount();
-                    O_Win::resetWindowCount();
-                    D_Win::resetWindowCount();
-                    A_Win::resetWindowCount();
+                    S_Win_e::resetWindowCount();
+                    SM_Win_e::resetWindowCount();
+                    SG_Win_e::resetWindowCount();
+                    SGM_Win_e::resetWindowCount();
+                    SC_Win_e::resetWindowCount();
+                    SCM_Win_e::resetWindowCount();
+                    F_Win_e::resetWindowCount();
+                    FC_Win_e::resetWindowCount();
+                    O_Win_e::resetWindowCount();
+                    D_Win_e::resetWindowCount();
+                    A_Win_e::resetWindowCount();
 
                     std::cout << "✅ All window data cleared!\n";
                 } else {
@@ -82,7 +83,7 @@ int main() {
 
                     switch (estChoice) {
                         case 1:
-                            addOrEditWindowsLoop(windows, windowTypes, estimator, ratesManager,
+                            addOrEditWindowsLoop(windows, EstimatorWindowTypes, estimator, ratesManager,
                                                 summaryManager, finalEstimator, autoRatesManager);
                             break;
                         case 2:
@@ -121,17 +122,17 @@ int main() {
                     if (fabChoice == 0) break;
 
                     switch (fabChoice) {
-                        case 1:
-                            addWindowForFabrication();
+                       case 1:
+                            addWindowForFabrication(windows, FabricatorWindowTypes);
                             break;
                         case 2:
-                            getMaterialNeeded();   // ✅ tum isko implement karoge
+                            getMaterialNeeded(windows, estimator, ratesManager, autoRatesManager);
                             break;
                         case 3:
                             getCuttingSize();
                             break;
                         case 4:
-                            settingsMenu();
+                            settingsFabricator();
                             break;
                         default:
                             cout << "❌ Invalid option.\n";

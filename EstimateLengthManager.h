@@ -18,7 +18,7 @@ private:
     std::unordered_map<std::string, std::vector<std::vector<std::pair<std::string, double>>>> sectionSizes;
     EstimateLengthResult groupedSectionSummaries;
     mutable std::unordered_map<std::string, std::vector<std::pair<std::string, double>>> combinedSections;
-    
+
     // ✅ Stores per-section summaries
     std::vector<SectionSummary> sectionSummaries;
 
@@ -47,6 +47,7 @@ public:
     const std::map<std::string, SectionSummary>& getOptimizedSummary() const;
     const std::unordered_map<std::string, std::vector<std::string>>& getGroupResults() const;
 
+    // ✅ Only ONE declaration of this function
     const EstimateLengthResult& getGroupedSectionSummaries() const;
     void setGroupedSectionSummaries(const EstimateLengthResult& result);
 
@@ -56,6 +57,9 @@ public:
     const std::vector<SectionSummary>& getSummaries() const;
     std::vector<SectionSummary>& getSummaries();
 
-    // Add this in the class definition
-    std::vector<SectionSummary>& getSectionUsage();
+    bool isEmpty() const {
+        return sectionSummaries.empty();
+    }
+
+    bool hasOptimizedData() const;
 };

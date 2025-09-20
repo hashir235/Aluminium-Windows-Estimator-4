@@ -88,6 +88,8 @@ public:
     int getColorChoice() const { return colorChoice; }
     void enableAutoRates(bool enabled) { autoRatesEnabled = enabled; }
     bool isAutoRatesEnabled() const { return autoRatesEnabled; }
+
+    void reset(); // clear all loaded data and reset choices
 };
 
 #endif // AUTORATESMANAGER_H

@@ -138,3 +138,16 @@ void ManualRatesManager::printFinalSummaryTable() const {
 double ManualRatesManager::getTotalAluminiumCost() const {
     return grand;  // ye final bill return karega
 }
+
+// ManualRatesManager.cpp me add karo
+void ManualRatesManager::reset() {
+    sectionRates.clear();   // saare purane rates hatao
+    grand = 0.0;            // total reset
+
+    // Har section ka price reset karo
+    for (auto& s : sections) {
+        s.totalPrice = 0.0;
+    }
+
+    std::cout << "🔄 ManualRatesManager data cleared!\n";
+}

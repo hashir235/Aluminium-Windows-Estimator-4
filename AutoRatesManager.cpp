@@ -406,3 +406,12 @@ double AutoRatesManager::computeAndStoreTotals(vector<SectionSummary>& sections)
 
     return grandTotal;
 }
+
+void AutoRatesManager::reset() {
+    sectionRates.clear();   // saare loaded rates clear
+    colorHeaders.clear();   // color headers reset
+    thicknessChoice = 1;    // default gauge (1.2mm)
+    colorChoice = 1;        // default color (DULL)
+    std::cout << "🔄 AutoRatesManager data cleared!\n";
+}
+

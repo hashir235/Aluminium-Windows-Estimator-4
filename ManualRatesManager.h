@@ -15,6 +15,7 @@ public:
     double computeAndStoreTotals();     // sets summary.totalPrice & returns grand total
     void printFinalSummaryTable() const;
     double getTotalAluminiumCost() const; // returns grand total aluminium cost
+    void reset();
 
     const std::map<std::string,double>& getRates() const { return sectionRates; }
 
