@@ -198,7 +198,7 @@ void O_Win_e::calculateSections() {
     }
 
         // Inner Sections
-        addSection("D50", { labelWith("HL", h + cm_D50), labelWith("HR", h + cm_D50 ), labelWith("WT", w + cm_D50 ), labelWith("WB", w + cm_D50 ) });
+        addSection("D50A", { labelWith("HL", h + cm_D50), labelWith("HR", h + cm_D50 ), labelWith("WT", w + cm_D50 ), labelWith("WB", w + cm_D50 ) });
 
     if(netChoice == "y" || netChoice == "Y") {
         addSection("D29", { labelWith("HL", h + cm_D29), labelWith("HR", h + cm_D29), labelWith("WT", w + cm_D29), labelWith("WB", w + cm_D29) });

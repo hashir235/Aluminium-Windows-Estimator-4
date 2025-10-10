@@ -1,4 +1,4 @@
-#include "S_Win_f.h"
+#include "SM_Win_f.h"
 #include "EstimateLengthManager.h"
 #include "SettingsManagerA.h"
 #include "SettingsManagerC.h"
@@ -10,9 +10,9 @@
 #include <limits>
 
 
-int S_Win_f::windowCount = 0; 
-void S_Win_f::resetWindowCount() { windowCount = 0;}
-S_Win_f::S_Win_f() {
+int SM_Win_f::windowCount = 0; 
+void SM_Win_f::resetWindowCount() { windowCount = 0;}
+SM_Win_f::SM_Win_f() {
     height = 0.0;
     width = 0.0;
     collarType = 0;
@@ -21,9 +21,9 @@ S_Win_f::S_Win_f() {
 }
 
 
-bool S_Win_f::inputWindowData(bool isEditing) {
+bool SM_Win_f::inputWindowData(bool isEditing) {
     if (!isEditing) {  
-        label = "S_Win_f #" + std::to_string(windowCount) + " -> ";
+        label = "SM_Win_f #" + std::to_string(windowCount) + " -> ";
     } else {
         std::cout << "\n--- Editing " << label << " ---\n";
     }
@@ -103,7 +103,7 @@ bool S_Win_f::inputWindowData(bool isEditing) {
 
 
 
-void S_Win_f::calculateSections() {
+void SM_Win_f::calculateSections() {
     sectionMap.clear();
 
     double h = height;
@@ -131,70 +131,70 @@ void S_Win_f::calculateSections() {
     // 🔹 Collar type based outer sections
     switch (collarType) {
         case 1:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 2:
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 3:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet) });
+            addSection("M30", { labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 4:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HR", ((h) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) }); 
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HR", ((h) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) }); 
             break;
         case 5:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 6:
-            addSection("DC30F", { labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30F", { labelWith("HR", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 7:
-            addSection("DC30F", { labelWith("HR", ((h + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30F", { labelWith("HR", ((h + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 8:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HR", ((h) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HR", ((h) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 9:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet), labelWith("HR", ((h + 6) + cm)/feet) });
+            addSection("M30", { labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 10:
-            addSection("DC30F", { labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30F", { labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 11:
-            addSection("DC30F", { labelWith("WT", ((w + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("WT", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 12:
-            addSection("DC30F", { labelWith("HR", ((h + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("HR", ((h + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
         case 13:
-            addSection("DC30C", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26F", { labelWith("WB", ((w + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HL", ((h) + cm)/feet), labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26F", { labelWith("WB", ((w + 6) + cm)/feet) });
             break;
         case 14:
-            addSection("DC30F", { labelWith("HL", ((h + 6) + cm)/feet) });
-            addSection("DC30C", { labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
-            addSection("DC26C", { labelWith("WB", ((w) + cm)/feet) });
+            addSection("M30F", { labelWith("HL", ((h + 6) + cm)/feet) });
+            addSection("M30", { labelWith("HR", ((h) + cm)/feet), labelWith("WT", ((w) + cm)/feet) });
+            addSection("M26", { labelWith("WB", ((w) + cm)/feet) });
             break;
     }
 
@@ -206,9 +206,9 @@ void S_Win_f::calculateSections() {
     addSection("M24", { labelWith("W1", (((w - 15.5)/2 )+ cm) / feet), labelWith("W2", (((w - 15.5)/2 )+ cm) / feet),
                         labelWith("W3", (((w - 15.5)/2 )+ cm) / feet), labelWith("W4", (((w - 15.5)/2 )+ cm) / feet)
                       });
-    addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
-                        labelWith("WT", ((((w - 15.5)/2 )+8.5)+ cm) / feet), labelWith("WB", ((((w - 15.5)/2 )+8.5)+ cm) / feet)
-                      });
+    // addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
+    //                     labelWith("WT", ((((w - 15.5)/2 )+8.5)+ cm) / feet), labelWith("WB", ((((w - 15.5)/2 )+8.5)+ cm) / feet)
+    //                   });
                     
     }else if (lockType == 2)
     {
@@ -218,9 +218,9 @@ void S_Win_f::calculateSections() {
     addSection("M24", { labelWith("W1", (((w - 17.2)/2 )+ cm) / feet), labelWith("W2", (((w - 17.2)/2 )+ cm) / feet),
                         labelWith("W3", (((w - 17.2)/2 )+ cm) / feet), labelWith("W4", (((w - 17.2)/2 )+ cm) / feet)
                       });
-    addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
-                        labelWith("WT", ((((w - 17.2)/2 )+ 9)+ cm) / feet), labelWith("WB", ((((w - 17.2)/2 )+ 9)+ cm) / feet)
-                      });  
+    // addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
+    //                     labelWith("WT", ((((w - 17.2)/2 )+ 9)+ cm) / feet), labelWith("WB", ((((w - 17.2)/2 )+ 9)+ cm) / feet)
+    //                   });  
 
     }else if (lockType == 3)
     {
@@ -230,39 +230,39 @@ void S_Win_f::calculateSections() {
     addSection("M24", { labelWith("W1", (((w - 15.5)/2 )+ cm) / feet), labelWith("W2", (((w - 15.5)/2 )+ cm) / feet),
                         labelWith("W3", (((w - 15.5)/2 )+ cm) / feet), labelWith("W4", (((w - 15.5)/2 )+ cm) / feet)
                       });
-    addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
-                        labelWith("WT", ((((w - 15.5)/2 )+ 5.5)+ cm) / feet), labelWith("WB", ((((w - 15.5)/2 )+ 5.5)+ cm) / feet)
-                      });
+    // addSection("D29", { labelWith("HL", ((h - 4.2) + cm) / feet), labelWith("HR", ((h - 4.2) + cm) / feet),
+    //                     labelWith("WT", ((((w - 15.5)/2 )+ 5.5)+ cm) / feet), labelWith("WB", ((((w - 15.5)/2 )+ 5.5)+ cm) / feet)
+    //                   });
     }
                                    
 }
 
 
-std::string S_Win_f::getLabel() const {
+std::string SM_Win_f::getLabel() const {
     return label;
 }
 
-const SectionMap& S_Win_f::getSectionMap() const {
+const SectionMap& SM_Win_f::getSectionMap() const {
     return sectionMap;
 }
 
 
-void S_Win_f::sendToEstimator(EstimateLengthManager& estimator) {
+void SM_Win_f::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
 
-//char S_Win_f::getSize() const { return unitChoice; }
+//char SM_Win_f::getSize() const { return unitChoice; }
 
-double S_Win_f::getAreaSqFt() const {
+double SM_Win_f::getAreaSqFt() const {
     return 0.0;  // Not applicable for F-series
 }
 
-double S_Win_f::getHeight() const {  return height;}
-double S_Win_f::getWidth() const { return width;}
-int S_Win_f::getCollarType() const { return collarType; }
-int S_Win_f::getLockType() const { return lockType; }  // ✔ New getter for lock type
+double SM_Win_f::getHeight() const {  return height;}
+double SM_Win_f::getWidth() const { return width;}
+int SM_Win_f::getCollarType() const { return collarType; }
+int SM_Win_f::getLockType() const { return lockType; }  // ✔ New getter for lock type
 
-void S_Win_f::sendToEstimator() {
-    std::cout << "[S_Win_f] Warning: No estimator provided in sendToEstimator().\n";
+void SM_Win_f::sendToEstimator() {
+    std::cout << "[SM_Win_f] Warning: No estimator provided in sendToEstimator().\n";
 }

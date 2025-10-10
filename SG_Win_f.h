@@ -4,14 +4,15 @@
 #include "CommonTypes.h"
 #include "EstimateLengthManager.h"
 
-class S_Win_f : public FrameComponent {
+class SG_Win_f : public FrameComponent {
 private:
     std::string label;
     SectionMap sectionMap;
     static int windowCount;
     int lockType;   // ✔ lock type
+    int windowType = 0;
 public:
-    S_Win_f();
+    SG_Win_f();
     static void resetWindowCount();
     bool inputWindowData(bool isEditing = false) override;
     void calculateSections() override;

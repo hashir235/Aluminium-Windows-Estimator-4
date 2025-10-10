@@ -15,14 +15,90 @@ void printFabricatorWindowsSummary(const vector<unique_ptr<FrameComponent>>& win
     cout << "\n--- Entered Fabricator Windows Summary ---\n";
     for (size_t i = 0; i < windows.size(); ++i) {
         const auto& w = windows[i];
-        cout << i + 1 << ": " << w->getLabel()
-             << " | Hight: " << w->getHeight()
-             << " | wigth: " << w->getWidth()
-             << " | lock: " << w->getLockType() 
-             << " | collar: " << w->getCollarType() 
-             << endl;
+
+        if (auto s = dynamic_cast<S_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << s->getLabel()
+                 << " | Height: " << s->getHeight()
+                 << " | Width: " << s->getWidth()
+                 << " | Lock: " << s->getLockType()
+                 << " | Collar: " << s->getCollarType()
+                 << endl;
+        }
+        else if (auto sm = dynamic_cast<SM_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << sm->getLabel()
+                 << " | Height: " << sm->getHeight()
+                 << " | Width: " << sm->getWidth()
+                 << " | Lock: " << sm->getLockType()
+                 << " | Collar: " << sm->getCollarType()
+                 << endl;
+        }
+        else if (auto sg = dynamic_cast<SG_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << sg->getLabel()
+                 << " | Height: " << sg->getHeight()
+                 << " | Width: " << sg->getWidth()
+                 << " | Lock: " << sg->getLockType()
+                 << " | Collar: " << sg->getCollarType()
+                 << endl;
+        }
+        else if (auto sgm = dynamic_cast<SGM_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << sgm->getLabel()
+                 << " | Height: " << sgm->getHeight()
+                 << " | Width: " << sgm->getWidth()
+                 << " | Lock: " << sgm->getLockType()
+                 << " | Collar: " << sgm->getCollarType()
+                 << endl;
+        }
+        else if (auto sc = dynamic_cast<SC_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << sc->getLabel()
+                 << " | Height: " << sc->getHeight()
+                 << " | RightWidth: " << sc->getRightWidth()
+                 << " | LeftWidth: " << sc->getLeftWidth()
+                 << " | Lock: " << sc->getLockType()
+                 << " | Collar: " << sc->getCollarType()
+                 << endl;
+        }
+        else if (auto scm = dynamic_cast<SCM_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << scm->getLabel()
+                 << " | Height: " << scm->getHeight()
+                 << " | RightWidth: " << scm->getRightWidth()
+                 << " | LeftWidth: " << scm->getLeftWidth()
+                 << " | Lock: " << scm->getLockType()
+                 << " | Collar: " << scm->getCollarType()
+                 << endl;
+        }
+        else if (auto fc = dynamic_cast<FC_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << fc->getLabel()
+                 << " | Height: " << fc->getHeight()
+                 << " | RightWidth: " << fc->getRightWidth()
+                 << " | LeftWidth: " << fc->getLeftWidth()
+                 << " | Collar: " << fc->getCollarType()
+                 << endl;
+        }
+        else if (auto f = dynamic_cast<F_Win_f*>(w.get())) {  // Fix Window with lock type
+            cout << i + 1 << ": " << f->getLabel()
+                 << " | Height: " << f->getHeight()
+                 << " | Width: " << f->getWidth()
+                 << " | Collar: " << f->getCollarType()
+                 << endl;
+        }
+        else if (auto o = dynamic_cast<O_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << o->getLabel()
+                 << " | Height: " << o->getHeight()
+                 << " | Width: " << o->getWidth()
+                 << " | Collar: " << o->getCollarType()
+                 << endl;
+        }
+        else if (auto d = dynamic_cast<D_Win_f*>(w.get())) {
+            cout << i + 1 << ": " << d->getLabel()
+                 << " | Height: " << d->getHeight()
+                 << " | Width: " << d->getWidth()
+                 << " | Collar: " << d->getCollarType()
+                 << endl;
+        }
+       
     }
 }
+
 
 ////////////////////////////  Add or Edit Windows for Fabrication ///////////////////////////
 void addWindowForFabrication(
