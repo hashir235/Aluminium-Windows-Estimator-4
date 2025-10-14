@@ -355,16 +355,47 @@ void showFinalSummary(
             else if (choice == 2) {
                 cout << "\n-- Re-entering Other Rates...\n";
                 finalEstimator.inputRates();
-            }
-            else if (choice == 0) {
-                cout << "\n-- Going back to Home Menu...\n";
-                break;
-            }
-            else {
-                cout << "⚠️ Invalid choice! Please enter 1, 2, or 0.\n";
+            }else if (choice == 4) {
+            cout << "\n🧾 Generating Material Table and PDF...\n";
+
+            if (modeChoice == 2) {
+
+           if (autoRatesManager.isAutoRatesEnabled()) {
+            auto sections = estimator.getSummaries();
+            autoRatesManager.generateMaterialTxt(sections); // creates Temp_material_table.txt
+
+             // Create timestamp for unique filename
+                 time_t now = time(0);
+                 tm *ltm = localtime(&now);
+                 std::ostringstream oss;
+                 oss << std::put_time(ltm, "%Y%m%d_%H%M%S");
+
+                 std::string timestamp = oss.str();
+                 std::string cmd = "python material_pdf_e.py " + timestamp;
+                 system(cmd.c_str());
+
+             cout << "✅ Material Table PDF generated successfully!\n";
+         }
+            }else if (modeChoice == 1){
+                
+                ratesManager.saveFinalSummaryToFile(); // creates Temp_material_table.txt
+
+                 // Create timestamp for unique filename
+                 time_t now = time(0);
+                 tm *ltm = localtime(&now);
+                 std::ostringstream oss;
+                 oss << std::put_time(ltm, "%Y%m%d_%H%M%S");
+
+                 std::string timestamp = oss.str();
+                 std::string cmd = "python material_pdf_e.py " + timestamp;
+                 system(cmd.c_str());
+
+             cout << "✅ Material Table PDF generated successfully!\n";
             }
         }
 
+    }
+    
     } catch (const std::exception& ex) {
         cerr << "❌ Error during final summary: " << ex.what() << "\n";
     } catch (...) {

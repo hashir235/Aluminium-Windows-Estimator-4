@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <limits>
 #include <cctype>
+#include <vector>
+#include <string>
 
 // libcurl write callback
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -406,6 +408,60 @@ double AutoRatesManager::computeAndStoreTotals(vector<SectionSummary>& sections)
 
     return grandTotal;
 }
+
+//-------------------- Generate material_table.txt --------------------
+
+void AutoRatesManager::generateMaterialTxt(const vector<SectionSummary>& sections) {
+    ofstream file("Temp_material_table.txt");
+    if (!file.is_open()) {
+        cerr << "Error: Could not create Temp_material_table.txt\n";
+        return;
+    }
+
+    double grandTotal = 0.0;
+
+    // ✅ Recalculate totalPrice and grandTotal
+    for (auto &s : const_cast<vector<SectionSummary>&>(sections)) {
+        double rate = getRateForSection(s.sectionName);
+        s.totalPrice = s.totalLength * rate;
+        grandTotal += s.totalPrice;
+    }
+
+    file << "Final Aluminum Section Cost Table\n";
+   // file << "-------------------------------------------------------------\n";
+    file << left << setw(12) << "Section"
+         << " | " << setw(30) << "Lengths Used"
+         << " | " << setw(9) << "Total ft"
+         << " | " << setw(8) << "Rate"
+         << " | " << "Total Price\n";
+   // file << "------------|------------------------------|---------|--------|------------\n";
+
+    for (const auto &s : sections) {
+        string lengthsStr;
+        for (size_t i = 0; i < s.usedLengths.size(); ++i) {
+            lengthsStr += to_string((int)s.usedLengths[i]) + "ft";
+            if (i + 1 < s.usedLengths.size()) lengthsStr += ", ";
+        }
+
+        double rate = getRateForSection(s.sectionName);
+
+        file << left << setw(12) << s.sectionName << " | "
+             << setw(30) << lengthsStr << " | "
+             << right << setw(7) << fixed << setprecision(1) << s.totalLength << " | "
+             << "Rs. " << setw(4) << left << (int)rate << " | "
+             << "Rs. " << (int)s.totalPrice << "\n";
+    }
+
+    file << "-------------------------------------------------------------\n";
+    file << "Grand Total Aluminum Cost = Rs. {" << (int)grandTotal << "}\n";
+    file << "-------------------------------------------------------------\n";
+
+    file.close();
+    cout << "✅ Temp_material_table.txt generated successfully!\n";
+}
+
+
+
 
 void AutoRatesManager::reset() {
     sectionRates.clear();   // saare loaded rates clear

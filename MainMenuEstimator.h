@@ -6,6 +6,9 @@
 #include <functional>
 #include <string>
 #include <limits>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 
 // Project-specific headers
 #include "FrameComponent.h"

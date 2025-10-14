@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <fstream>   // for std::ofstream
+#include <iomanip>   // for std::setw, std::setprecision
 
 ManualRatesManager::ManualRatesManager(std::vector<SectionSummary>& summaries)
     : sections(summaries) {}
@@ -134,7 +136,60 @@ void ManualRatesManager::printFinalSummaryTable() const {
 
     std::cout << "-------------------------------------------------------------\n";
     std::cout << "Grand Total Aluminum Cost = Rs. " << static_cast<int>(grand) << "\n";
+    std::cout << "-------------------------------------------------------------\n";
 }
+
+void ManualRatesManager::saveFinalSummaryToFile() const {
+    if (sections.empty()) {
+        std::cout << "⚠️ Nothing to save.\n";
+        return;
+    }
+
+    std::ofstream outFile("Temp_material_table.txt");
+    if (!outFile.is_open()) {
+        std::cerr << "⚠️ Failed to create file Temp_material_table.txt\n";
+        return;
+    }
+
+    outFile << "💵 Final Aluminum Section Cost Table\n";
+    outFile << "-------------------------------------------------------------\n";
+    outFile << std::left << std::setw(10) << "Section"
+            << " | " << std::setw(30) << "Lengths Used"
+            << " | " << std::setw(9)  << "Total ft"
+            << " | " << std::setw(8)  << "Rate"
+            << " | " << "Total Price\n";
+    outFile << "--------|------------------------------|---------|--------|------------\n";
+
+    for (const auto& s : sections) {
+        double rate = 0.0;
+        auto it = sectionRates.find(s.sectionName);
+        if (it != sectionRates.end()) rate = it->second;
+
+        double totalPrice = s.totalPrice;
+
+        // Build comma-separated lengths list
+        std::string lengthsStr;
+        for (size_t i = 0; i < s.usedLengths.size(); ++i) {
+            lengthsStr += std::to_string(static_cast<int>(s.usedLengths[i])) + "ft";
+            if (i + 1 < s.usedLengths.size()) lengthsStr += ", ";
+        }
+
+        outFile << std::left << std::setw(10) << s.sectionName << " | "
+                << std::setw(30) << lengthsStr << " | "
+                << std::right << std::setw(7) << std::fixed << std::setprecision(1) << s.totalLength << " | "
+                << "Rs. " << std::setw(4) << std::left << static_cast<int>(rate) << " | "
+                << "Rs. " << static_cast<int>(totalPrice) << "\n";
+    }
+
+    outFile << "-------------------------------------------------------------\n";
+    outFile << "Grand Total Aluminum Cost = Rs. " << static_cast<int>(grand) << "\n";
+    outFile << "-------------------------------------------------------------\n";
+
+    outFile.close();
+    std::cout << "✅ Temp_material_table.txt created successfully!\n";
+}
+
+
 double ManualRatesManager::getTotalAluminiumCost() const {
     return grand;  // ye final bill return karega
 }
