@@ -252,7 +252,7 @@ void S_Win_f::sendToEstimator(EstimateLengthManager& estimator) {
 }
 
 
-//char S_Win_f::getSize() const { return unitChoice; }
+//char S_Win_f::getUnit() const { return unitChoice; }
 
 double S_Win_f::getAreaSqFt() const {
     return 0.0;  // Not applicable for F-series

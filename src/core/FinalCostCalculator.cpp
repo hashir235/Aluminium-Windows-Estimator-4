@@ -94,7 +94,7 @@ void FinalCostCalculator::inputRates() {
 
         // Step 2: Optional Project Details
         std::cout << "\n (Optional) Enter project details:\n";
-        projectName = getOptionalString(" Project Name: ");
+        projectName = getOptionalString(" Customer Name: ");
         location = getOptionalString(" Location: ");
         phoneNumber = getPhoneNumber(" Customer Phone Number (max 15 digits): ");
 
@@ -170,6 +170,6 @@ void FinalCostCalculator::inputRates() {
     }
 }
 
-int FinalCostCalculator::displayFinalSummary() {
+void FinalCostCalculator::displayFinalSummary() {
     return summaryManager.displayFinalSummary();
 }

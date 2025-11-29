@@ -34,7 +34,7 @@ public:
     void sendToEstimator(EstimateLengthManager& estimator) override;
     void sendToEstimator() override;
 
-    char getSize() const; // Get size unit (inches/feet)
+    char getUnit() const; // Get size unit (inches/feet)
     double getHeight() const;
     double getWidth() const;
     int getCollarType() const;

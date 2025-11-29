@@ -75,8 +75,10 @@ def generate_invoice(input_txt, output_pdf):
     ]
 
     info_data = []
-    info_data.append(["Date", datetime.now().strftime("%d-%b-%Y")])
-    
+
+    # ★★★ CHANGE #1 — TOP HEADER NOW "Project | Details"
+    info_data.append(["Project ", "Details"])
+
     for key, label in info_fields:
         for line in lines:
             if line.startswith(key):
@@ -211,11 +213,26 @@ def generate_invoice(input_txt, output_pdf):
         elements.append(cost_table)
         elements.append(Spacer(1, 30))
 
+    # ---------- DATE BELOW TABLES (CHANGE #2) ----------
+    date_row = Table(
+        [["Date", datetime.now().strftime("%d-%b-%Y")]],
+        hAlign='LEFT',
+        colWidths=[150, 300]
+    )
+    date_row.setStyle(TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(date_row)
+    elements.append(Spacer(1, 10))
+
     # ---------- LOGO + TITLE ----------
     def draw_header(canvas_obj, doc):
         page_width, page_height = A4
 
-        logo_path = ASSETS_DIR / "AL Windows.jpg"     # <-- FIXED
+        logo_path = ASSETS_DIR / "AL Windows.jpg"
         try:
             pil_img = PILImage.open(logo_path).convert("RGBA")
             size = min(pil_img.size)

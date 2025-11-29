@@ -29,7 +29,7 @@ public:
 
     std::string getSectionName(const std::string& sectionKey) const;
     
-    char getSize() const;
+    char getUnit() const;
     double getHeight() const;
     double getWidth() const;
     int getCollarType() const;

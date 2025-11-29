@@ -8,7 +8,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         // Try casting to SlideWindow to access SlideWindow-specific methods
         if (auto sw = dynamic_cast<S_Win_e*>(w.get())) {
             cout << i + 1 << ": " << sw->getLabel()
-                 << "Size: " << sw->getSize() << "  |  "
+                 << "Unit: " << sw->getUnit() << "  |  "
                  << "Height: " << sw->getHeight() << " i/f |  "
                  << "Width: " << sw->getWidth() << " i/f |  "
                  << "Collar: " << sw->getCollarType() << "  |  "
@@ -16,7 +16,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto swm = dynamic_cast<SM_Win_e*>(w.get())) {
             cout << i + 1 << ": " << swm->getLabel()
-                 << "Size: " << swm->getSize() << "  |  "
+                 << "Unit: " << swm->getUnit() << "  |  "
                  << "Height: " << swm->getHeight() << " i/f |  "
                  << "Width: " << swm->getWidth() << " i/f |  "
                  << "Collar: " << swm->getCollarType() << "  |  "
@@ -24,7 +24,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto sg = dynamic_cast<SG_Win_e*>(w.get())) {
             cout << i + 1 << ": " << sg->getLabel()
-                 << "Size: " << sg->getSize() << "  |  "
+                 << "Unit: " << sg->getUnit() << "  |  "
                  << "Height: " << sg->getHeight() << " i/f |  "
                  << "Width: " << sg->getWidth() << " i/f |  "
                  << "Collar: " << sg->getCollarType() << "  |  "
@@ -32,7 +32,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto sgm = dynamic_cast<SGM_Win_e*>(w.get())) {
             cout << i + 1 << ": " << sgm->getLabel()
-                 << "Size: " << sgm->getSize() << "  |  "
+                 << "Unit: " << sgm->getUnit() << "  |  "
                  << "Height: " << sgm->getHeight() << " i/f |  "
                  << "Width: " << sgm->getWidth() << " i/f |  "
                  << "Collar: " << sgm->getCollarType() << "  |  "
@@ -40,7 +40,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto sc = dynamic_cast<SC_Win_e*>(w.get())) {
             cout << i + 1 << ": " << sc->getLabel()
-                 << "Size: " << sc->getSize() << "  |  "
+                 << "Unit: " << sc->getUnit() << "  |  "
                  << "Height: " << sc->getHeight() << " i/f |  "
                  << "RightWidth: " << sc->getRightWidth() << " i/f |  "
                  << "LeftWidth: " << sc->getLeftWidth() << " i/f |  "
@@ -49,7 +49,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto scm = dynamic_cast<SCM_Win_e*>(w.get())) {
             cout << i + 1 << ": " << scm->getLabel()
-                 << "Size: " << scm->getSize() << "  |  "
+                 << "Unit: " << scm->getUnit() << "  |  "
                  << "Height: " << scm->getHeight() << " i/f |  "
                  << "RightWidth: " << scm->getRightWidth() << " i/f |  "
                  << "LeftWidth: " << scm->getLeftWidth() << " i/f |  "
@@ -58,7 +58,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto fc = dynamic_cast<FC_Win_e*>(w.get())) {
             cout << i + 1 << ": " << fc->getLabel()
-                 << "Size: " << fc->getSize() << "  |  "
+                 << "Unit: " << fc->getUnit() << "  |  "
                  << "Height: " << fc->getHeight() << " i/f |  "
                  << "RightWidth: " << fc->getRightWidth() << " i/f |  "
                  << "LeftWidth: " << fc->getLeftWidth() << " i/f |  "
@@ -67,7 +67,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto f = dynamic_cast<F_Win_e*>(w.get())) {
             cout << i + 1 << ": " << f->getLabel()
-                 << "Size: " << f->getSize() << "  |  "
+                 << "Unit: " << f->getUnit() << "  |  "
                  << "Height: " << f->getHeight() << " i/f |  "
                  << "Width: " << f->getWidth() << " i/f |  "
                  << "Collar: " << f->getCollarType() << "  |  "
@@ -75,7 +75,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto o = dynamic_cast<O_Win_e*>(w.get())) {
             cout << i + 1 << ": " << o->getLabel()
-                 << "Size: " << o->getSize() << "  |  "
+                 << "Unit: " << o->getUnit() << "  |  "
                  << "Height: " << o->getHeight() << " i/f |  "
                  << "Width: " << o->getWidth() << " i/f |  "
                  << "Collar: " << o->getCollarType() << "  |  "
@@ -83,7 +83,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto d = dynamic_cast<D_Win_e*>(w.get())) {
             cout << i + 1 << ": " << d->getLabel()
-                 << "Size: " << d->getSize() << "  |  "
+                 << "Unit: " << d->getUnit() << "  |  "
                  << "Height: " << d->getHeight() << " i/f |  "
                  << "Width: " << d->getWidth() << " i/f |  "
                  << "Collar: " << d->getCollarType() << "  |  "
@@ -91,7 +91,7 @@ void printWindowsSummary(const vector<unique_ptr<FrameComponent>>& windows) {
         }
         else if (auto ar = dynamic_cast<A_Win_e*>(w.get())) {
             cout << i + 1 << ": " << ar->getLabel()
-                 << "Size: " << ar->getSize() << "  |  "
+                 << "Unit: " << ar->getUnit() << "  |  "
                  << "Height: " << ar->getHeight() << " i/f |  "
                  << "Width: " << ar->getWidth() << " i/f |  "
                  << "Arch: " << ar->getArch() << " i/f |  "
@@ -305,105 +305,104 @@ void showFinalSummary(
         // 4. Baaki rates input lo
         finalEstimator.inputRates();
 
-        // 5. Loop for re-estimation
-        while (true) {
-            int choice = finalEstimator.displayFinalSummary();
+        // 5. Loop for further actions
+        while (true)
+{
+    finalEstimator.displayFinalSummary();
 
-            if (choice == 1) {
-                cout << "\n Generating a NEW Bill...\n";
+    // FIX BUFFER BUG
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                if (modeChoice == 1) {
-                    // Manual mode
-                    ratesManager.inputRatesFromUser();
-                    ratesManager.editRateByLineNumber();
-                    grandTotal = ratesManager.computeAndStoreTotals();
-                    ratesManager.printFinalSummaryTable();
-                    autoRatesManager.enableAutoRates(false);
+    std::cout << "\n What do you want to do next?\n"
+              << "   [1] Make a NEW bill (reset data)\n"
+              << "   [2] Re-enter Other Rates\n"
+              << "   [3] Download invoice                   (PDF)\n"
+              << "   [4] Download Material Table            (PDF)\n"
+              << "   [5] Download Length Optimization Table (PDF)\n"
+              << "   [0] Go back to Home Menu\n"
+              << "Enter choice: ";
 
-                } 
-                else {
-                    // Auto mode (try again online)
-                    if (autoRatesManager.updateRateListFromServer(
-                            "https://raw.githubusercontent.com/hashir235/Al_Ratelist/main/RateList.csv")) 
-                    {
-                        autoRatesManager.selectOptions();
+    int choice;
+    std::cin >> choice;
 
-                        auto sections = estimator.getSummaries();
+    if (choice == 1) {
+        cout << "\n Generating a NEW Bill...\n";
 
-                        autoRatesManager.reviewAndEditRates(sections);
+        if (modeChoice == 1) {
+            ratesManager.inputRatesFromUser();
+            ratesManager.editRateByLineNumber();
+            grandTotal = ratesManager.computeAndStoreTotals();
+            ratesManager.printFinalSummaryTable();
+            autoRatesManager.enableAutoRates(false);
 
-                        grandTotal = autoRatesManager.computeAndStoreTotals(sections);
-
-                        autoRatesManager.enableAutoRates(true);  // agar user ne auto mode select kiya
-                        //autoRatesManager.printFinalSummaryTable();
-                    } 
-                    else {
-                        cerr << " Online fetch failed! Switching to Manual.\n";
-                        modeChoice = 1;
-                        ratesManager.inputRatesFromUser();
-                        ratesManager.editRateByLineNumber();
-                        grandTotal = ratesManager.computeAndStoreTotals();
-                        ratesManager.printFinalSummaryTable();
-                        autoRatesManager.enableAutoRates(false);
-
-                    }
-                }
-
-                summaryManager.setAluminiumTotal(grandTotal);
-                finalEstimator.inputRates();
-            }
-            else if (choice == 2) {
-                cout << "\n-- Re-entering Other Rates...\n";
-                finalEstimator.inputRates();
-
-            }else if (choice == 4) {
-        cout << "\n Generating Material Table and PDF...\n";
-
-         // -----------------------------------------
-         // STEP 1: Create / Overwrite TXT file
-         // -----------------------------------------
-         if (modeChoice == 2) {
-
-           if (autoRatesManager.isAutoRatesEnabled()) {
-                auto sections = estimator.getSummaries();
-                autoRatesManager.generateMaterialTxt(sections);   // creates data/Temp_material.txt
-            }
-
-        } else if (modeChoice == 1) {
-
-            ratesManager.saveFinalSummaryToFile();                 // creates data/Temp_material.txt
-        }
-        // -----------------------------------------
-        // STEP 2: Call Python script (Python will
-        //         handle timestamp + PDF path)
-        // -----------------------------------------
-        std::string cmd =
-            "python scripts/material_pdf_e.py data/Temp_material.txt";
-
-        system(cmd.c_str());
-
-        cout << "Material Table PDF generated successfully!\n";
-
-    }else if(choice == 5){
-
-        getCuttingSize(1);  // Creates data/CuttingSizeReport.txt
-
-        int result = system(
-            "python scripts/CuttingPDF_fixed.py data/CuttingSizeReport.txt"
-        );
-
-        if(result == 0) {
-             cout << "PDF generated successfully.\n";
         } else {
-            cout << "Failed to generate PDF. Check Python installation.\n";
+            if (autoRatesManager.updateRateListFromServer(
+                    "https://raw.githubusercontent.com/hashir235/Al_Ratelist/main/RateList.csv"))
+            {
+                autoRatesManager.selectOptions();
+                auto sections = estimator.getSummaries();
+                autoRatesManager.reviewAndEditRates(sections);
+                grandTotal = autoRatesManager.computeAndStoreTotals(sections);
+                autoRatesManager.enableAutoRates(true);
+
+            } else {
+                cerr << " Online fetch failed! Switching to Manual.\n";
+                modeChoice = 1;
+                ratesManager.inputRatesFromUser();
+                ratesManager.editRateByLineNumber();
+                grandTotal = ratesManager.computeAndStoreTotals();
+                ratesManager.printFinalSummaryTable();
+                autoRatesManager.enableAutoRates(false);
+            }
         }
 
-    }else{
-                cout << " Final Estimation complete. Returning to Main Menu...\n";
-                break;
-        }
-
+        summaryManager.setAluminiumTotal(grandTotal);
+        finalEstimator.inputRates();
     }
+
+    else if (choice == 2) {
+        cout << "\n-- Re-entering Other Rates...\n";
+        finalEstimator.inputRates();
+    }
+
+    else if (choice == 3) {
+        cout << "\n Generating Invoice PDF...\n";
+        summaryManager.generateInvoicePDF();   // <-- FIXED
+    }
+
+    else if (choice == 4) {
+        cout << "\n Generating Material Table PDF...\n";
+
+        if (modeChoice == 2) {
+            if (autoRatesManager.isAutoRatesEnabled()) {
+                auto sections = estimator.getSummaries();
+                autoRatesManager.generateMaterialTxt(sections,1);
+            }
+        } else {
+            ratesManager.saveFinalSummaryToFile(1);
+        }
+
+        system("python scripts/material_pdf_e.py data/Temp_material.txt");
+        cout << "Material Table PDF generated successfully!\n";
+    }
+
+    else if (choice == 5) {
+        cout << "\n Generating Cutting Size PDF...\n";
+
+        getCuttingSize(1);
+
+        int result = system("python scripts/CuttingPDF_fixed.py data/CuttingSizeReport.txt");
+        if (result == 0) cout << "PDF generated successfully.\n";
+        else cout << "Failed to generate PDF.\n";
+    }
+
+    else {
+        cout << " Final Estimation complete. Returning to Main Menu...\n";
+        break;
+    }
+}
+
+
     
     } catch (const std::exception& ex) {
         cerr << " Error during final summary: " << ex.what() << "\n";
@@ -417,9 +416,9 @@ void showFinalSummary(
 
 void settingsMenu() {
     int option;
-    auto& manager = Section_Settings::getInstance();      // Old system (A)
-    auto& managerB = general_settings::getInstance();    // New system (B)
-    auto& managerC = Margins_Settings::getInstance();   // Newest system (C)
+    auto& manager = Section_Settings::getInstance();      
+    auto& managerB = general_settings::getInstance();    
+    auto& managerC = Margins_Settings::getInstance();   
     AutoRatesManager autoRatesManager;  
 
     do {

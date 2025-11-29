@@ -220,7 +220,7 @@ void SM_Win_e::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
-char SM_Win_e::getSize() const {return unitChoice;}
+char SM_Win_e::getUnit() const {return unitChoice;}
 double SM_Win_e::getHeight() const { if (inputInInches) {return height * 12.0;} return height;}
 double SM_Win_e::getWidth() const {if (inputInInches){return width * 12.0;} return width;}
 int SM_Win_e::getCollarType() const { return collarType; }

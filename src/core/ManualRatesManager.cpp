@@ -139,7 +139,7 @@ void ManualRatesManager::printFinalSummaryTable() const {
     std::cout << "-------------------------------------------------------------\n";
 }
 
-void ManualRatesManager::saveFinalSummaryToFile() const {
+void ManualRatesManager::saveFinalSummaryToFile(int mod) const {
     if (sections.empty()) {
         std::cout << " Nothing to save.\n";
         return;
@@ -156,8 +156,8 @@ void ManualRatesManager::saveFinalSummaryToFile() const {
     // ------------------------------
     // SAME STRUCTURE — DO NOT CHANGE
     // ------------------------------
-    outFile << " Final Aluminum Section Cost Table\n";
-    outFile << "-------------------------------------------------------------\n";
+    if       (mod == 1){outFile << " Estimated Aluminum Section Cost Report\n";
+    }else if (mod == 2){outFile << " Fabricated Aluminum Section Cost Report\n";}
     outFile << std::left << std::setw(10) << "Section"
             << " | " << std::setw(30) << "Lengths Used"
             << " | " << std::setw(9)  << "Total ft"

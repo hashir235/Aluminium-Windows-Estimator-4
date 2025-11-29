@@ -17,7 +17,7 @@ public:
     double getTotalAluminiumCost() const; // returns grand total aluminium cost
     void reset();
 
-    void saveFinalSummaryToFile() const;   
+    void saveFinalSummaryToFile(int mod) const;   
 
     const std::map<std::string,double>& getRates() const { return sectionRates; }
 

@@ -93,6 +93,11 @@ def generate_material_pdf():
         lines = [line.strip() for line in f if line.strip()]
 
     # ================================================
+    # 🔥 DYNAMIC TITLE (FIRST LINE OF TEXT FILE)
+    # ================================================
+    raw_title = lines[0] if lines else "Material Cost Report"
+
+    # ================================================
     # SAME LOGIC — SAME DESIGN — DO NOT TOUCH
     # ================================================
     sections_data = []
@@ -124,7 +129,10 @@ def generate_material_pdf():
 
     elements = []
     elements.append(Spacer(1, -30))
-    elements.append(Paragraph("<b>Aluminum Section Cost Table</b>", title_style))
+
+    # 🔥 USE DYNAMIC TITLE HERE
+    elements.append(Paragraph(f"<b>{raw_title}</b>", title_style))
+
     elements.append(Spacer(1, 10))
 
     table = Table(table_data, colWidths=[80, 60, 40, 70, 70, 80])

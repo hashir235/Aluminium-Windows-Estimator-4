@@ -185,7 +185,7 @@ void F_Win_f::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
-char F_Win_f::getSize() const {return unitChoice;}   
+char F_Win_f::getUnit() const {return unitChoice;}   
 double F_Win_f::getHeight() const {  return height;}
 double F_Win_f::getWidth() const { return width;}
 int F_Win_f::getCollarType() const { return collarType; }

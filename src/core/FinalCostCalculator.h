@@ -19,7 +19,7 @@ public:
 
     
     void inputRates();
-    int displayFinalSummary();
+    void displayFinalSummary();
 
     void setProjectName(const std::string& name);
     void setLocation(const std::string& loc);

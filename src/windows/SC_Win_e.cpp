@@ -247,7 +247,7 @@ void SC_Win_e::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
-char SC_Win_e::getSize() const {return unitChoice;}
+char SC_Win_e::getUnit() const {return unitChoice;}
 double SC_Win_e::getHeight() const { if (inputInInches) {return height * 12.0;} return height;}
 double SC_Win_e::getWidth() const {if (inputInInches){return width * 12.0;} return width;}
 double SC_Win_e::getRightWidth() const { if (inputInInches) {return rightWidth * 12.0;} return rightWidth; }

@@ -20,7 +20,7 @@ public:
     void calculateSections() override;
 
     // --- Getters ---
-    char getSize() const;                    // size unit (inches/feet)
+    char getUnit() const;                    // size unit (inches/feet)
     double getAreaSqFt() const override;
     double getHeight() const;
     double getWidth() const;

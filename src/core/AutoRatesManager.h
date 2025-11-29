@@ -90,7 +90,7 @@ public:
     bool isAutoRatesEnabled() const { return autoRatesEnabled; }
 
     // ⬇️ Add this new function declaration
-    void generateMaterialTxt(const std::vector<SectionSummary>& sections);
+    void generateMaterialTxt(const std::vector<SectionSummary>& sections , int mod);
 
     void reset(); // clear all loaded data and reset choices
 };

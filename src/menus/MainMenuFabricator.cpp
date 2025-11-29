@@ -210,7 +210,7 @@ void addWindowForFabrication(
 }
 
 
-////////////////////////// ⚙ 2. Material requirement calculate karna
+//////////////////////////  2. Material requirement calculate karna
 void getMaterialNeeded(
     vector<unique_ptr<FrameComponent>>& windows,
     EstimateLengthManager& estimator,
@@ -244,7 +244,8 @@ void getMaterialNeeded(
                 ratesManager.editRateByLineNumber();
                 grandTotal = ratesManager.computeAndStoreTotals();
                 ratesManager.printFinalSummaryTable();
-                
+                ratesManager.saveFinalSummaryToFile(2); // creates data/Temp_material.txt
+
                 cout << "\n Grand Total Aluminium Cost = Rs. "
                 << static_cast<int>(grandTotal) << "\n";
                 
@@ -274,16 +275,12 @@ void getMaterialNeeded(
                     if (choice == 0) {
                         cout << "\n-- Going back to Fabricator Menu...\n";
                         break;  // loop se bahar nikal jao
+
                     } else if (choice == 1) {
                         continue; // loop repeat hoga, user new discount try karega
+
                         } else if (choice == 2) {
                            cout << "\n Generating Material Table and PDF...\n";
-                            // -----------------------------------------
-                            // STEP 1: Create / Overwrite TXT file
-                            // -----------------------------------------
-                   
-                 ratesManager.saveFinalSummaryToFile();                 // creates data/Temp_material.txt
-                 
                 // -----------------------------------------
                 // STEP 2: Call Python script (Python will
                 //         handle timestamp + PDF path)
@@ -331,7 +328,74 @@ void getMaterialNeeded(
                 autoRatesManager.reviewAndEditRates(sections);
 
                 grandTotal = autoRatesManager.computeAndStoreTotals(sections);
+                cout << "\n Grand Total Aluminium Cost = Rs. "
+                << static_cast<int>(grandTotal) << "\n";
+
+                autoRatesManager.generateMaterialTxt(sections,2); // creates data/Temp_material.txt
+
+                while (true) {
+                    // 🔹 Ask for discount
+                    double discountPercent = 0.0;
+                    cout << "Enter discount percentage (0 if none): ";
+                    cin >> discountPercent;
+                    
+                    // 🔹 Apply discount
+                    double finalAmount = grandTotal - (grandTotal * discountPercent / 100.0);
+                    
+                    // 🔹 Show final amount in curly braces
+                    cout << " Final Amount after discount = { Rs. "
+                    << static_cast<int>(finalAmount) << " }\n";
+                    
+                    // 🔹 Ask user next step
+                    int choice = -1;
+                    cout << "\nNext Action:\n";
+                    cout << "[1]. Try another discount\n";
+                    cout << "[2]. Get Material Report PDF\n";
+                    cout << "[3]. Get Cutting Sizes Report PDF\n";
+                    cout << "[0]. <- Back to Home (Fabricator Menu)\n";
+                    cout << "Enter choice: ";
+                    cin >> choice;
+                    
+                    if (choice == 0) {
+                        cout << "\n-- Going back to Fabricator Menu...\n";
+                        break;  // loop se bahar nikal jao
+                    } else if (choice == 1) {
+                        continue; // loop repeat hoga, user new discount try karega
+
+                        } else if (choice == 2) {
+                           cout << "\n Generating Material Table and PDF...\n";
+                      
+                    std::string cmd =
+                            "python scripts/material_pdf_e.py data/Temp_material.txt";
+                        system(cmd.c_str());
+                    cout << "Material Table PDF generated successfully!\n";
+
+                    }else if (choice == 3) {
+                        getCuttingSize(2);  // Generates CuttingSizeReport.txt
+                                  // Now generate PDF using Python script
+                        int result = system(
+                                     "python scripts/CuttingPDF_fixed.py data/CuttingSizeReport.txt"
+                                    );
+
+                        if(result == 0) {
+                            cout << "PDF generated successfully: Cutting Size Report PDF_fixed.pdf\n";
+                         } else {
+                            cout << "Failed to generate PDF. Check Python installation.\n";
+                         }
+                    } else {
+                        cout << " Invalid choice! Please enter 1 or 0.\n";
+                    }
+                }                    
                 
+            } else {
+                cerr << " Failed to fetch rates online! Falling back to Manual mode.\n";
+                modeChoice = 1;
+                ratesManager.inputRatesFromUser();
+                ratesManager.editRateByLineNumber();
+                grandTotal = ratesManager.computeAndStoreTotals();
+                ratesManager.printFinalSummaryTable();
+                ratesManager.saveFinalSummaryToFile(2); // creates data/Temp_material.txt
+
                 cout << "\n Grand Total Aluminium Cost = Rs. "
                 << static_cast<int>(grandTotal) << "\n";
                 
@@ -363,81 +427,16 @@ void getMaterialNeeded(
                         break;  // loop se bahar nikal jao
                     } else if (choice == 1) {
                         continue; // loop repeat hoga, user new discount try karega
-                        } else if (choice == 2) {
-                           cout << "\n Generating Material Table and PDF...\n";
-                            // -----------------------------------------
-                            // STEP 1: Create / Overwrite TXT file
-                            // -----------------------------------------
 
-                      if (autoRatesManager.isAutoRatesEnabled()) {
-                      auto sections = estimator.getSummaries();
-                      autoRatesManager.generateMaterialTxt(sections);   // creates data/Temp_material.txt
-                    }
+                        }else if (choice == 2) {
+                           cout << "\n Generating Material Table and PDF...\n";
                       
                     std::string cmd =
                             "python scripts/material_pdf_e.py data/Temp_material.txt";
-
                         system(cmd.c_str());
-
                     cout << "Material Table PDF generated successfully!\n";
 
-                    }else if (choice == 3) {
-                        getCuttingSize(2);  // Generates CuttingSizeReport.txt
-                                  // Now generate PDF using Python script
-                        int result = system(
-                                     "python scripts/CuttingPDF_fixed.py data/CuttingSizeReport.txt"
-                                    );
-
-
-                        if(result == 0) {
-                            cout << "PDF generated successfully: Cutting Size Report PDF_fixed.pdf\n";
-                         } else {
-                            cout << "Failed to generate PDF. Check Python installation.\n";
-                        }
-                    } else {
-                        cout << " Invalid choice! Please enter 1 or 0.\n";
-                    }
-                }                    
-                
-            } else {
-                cerr << " Failed to fetch rates online! Falling back to Manual mode.\n";
-                modeChoice = 1;
-                ratesManager.inputRatesFromUser();
-                ratesManager.editRateByLineNumber();
-                grandTotal = ratesManager.computeAndStoreTotals();
-                ratesManager.printFinalSummaryTable();
-                
-                cout << "\n Grand Total Aluminium Cost = Rs. "
-                << static_cast<int>(grandTotal) << "\n";
-                
-                while (true) {
-                    // 🔹 Ask for discount
-                    double discountPercent = 0.0;
-                    cout << "Enter discount percentage (0 if none): ";
-                    cin >> discountPercent;
-                    
-                    // 🔹 Apply discount
-                    double finalAmount = grandTotal - (grandTotal * discountPercent / 100.0);
-                    
-                    // 🔹 Show final amount in curly braces
-                    cout << " Final Amount after discount = { Rs. "
-                    << static_cast<int>(finalAmount) << " }\n";
-                    
-                    // 🔹 Ask user next step
-                    int choice = -1;
-                    cout << "\nNext Action:\n";
-                    cout << "[1]. Try another discount\n";
-                    cout << "[2]. Get Cutting Sizes Report\n";
-                    cout << "[0]. Back to Home (Fabricator Menu)\n";
-                    cout << "Enter choice: ";
-                    cin >> choice;
-                    
-                    if (choice == 0) {
-                        cout << "\n-- Going back to Fabricator Menu...\n";
-                        break;  // loop se bahar nikal jao
-                    } else if (choice == 1) {
-                        continue; // loop repeat hoga, user new discount try karega
-                        } else if (choice == 2) {
+                    } else if (choice == 3) {
                         getCuttingSize(2);  // Generates CuttingSizeReport.txt
                                   // Now generate PDF using Python script
                         int result = system(
@@ -465,6 +464,7 @@ void getMaterialNeeded(
             ratesManager.editRateByLineNumber();
                 grandTotal = ratesManager.computeAndStoreTotals();
                 ratesManager.printFinalSummaryTable();
+                ratesManager.saveFinalSummaryToFile(2); // creates data/Temp_material.txt
                 
                 cout << "\n✅ Grand Total Aluminium Cost = Rs. "
                 << static_cast<int>(grandTotal) << "\n";
@@ -486,8 +486,9 @@ void getMaterialNeeded(
                     int choice = -1;
                     cout << "\nNext Action:\n";
                     cout << "[1]. Try another discount\n";
-                    cout << "[2]. Get Cutting Sizes Report\n";
-                    cout << "[0]. Back to Home (Fabricator Menu)\n";
+                    cout << "[2]. Get Material Report PDF\n";
+                    cout << "[3]. Get Cutting Sizes Report PDF\n";
+                    cout << "[0]. <- Back to Home (Fabricator Menu)\n";
                     cout << "Enter choice: ";
                     cin >> choice;
                     
@@ -497,7 +498,17 @@ void getMaterialNeeded(
 
                     } else if (choice == 1) {
                         continue; // loop repeat hoga, user new discount try karega
-                    } else if (choice == 2) {
+                    } else if (choice == 2) 
+                    {
+                           cout << "\n Generating Material Table and PDF...\n";
+                      
+                    std::string cmd =
+                            "python scripts/material_pdf_e.py data/Temp_material.txt";
+                        system(cmd.c_str());
+                    cout << "Material Table PDF generated successfully!\n";
+
+                    } else if (choice == 3)
+                     {
 
                          getCuttingSize(2);  // Generates CuttingSizeReport.txt
                                   // Now generate PDF using Python script
@@ -551,7 +562,7 @@ void getCuttingSize(int mod) {
 
 
 
-/////////////////////////// ⚙ 5. Settings menu
+///////////////////////////  5. Settings menu
 void settingsFabricator() {
     cout << "\n[Fabricator Settings]\n";
     cout << "1. Update cutting margin\n";
@@ -565,6 +576,6 @@ void settingsFabricator() {
         cout << "Enter new cutting margin (cm): ";
         cin >> newMargin;
         // TODO: Margins_Settings use karke save karo
-        cout << " Cutting margin updated.\n";
+        cout << newMargin <<" Cutting margin updated.\n";
     }
 }

@@ -229,7 +229,7 @@ void S_Win_e::sendToEstimator(EstimateLengthManager& estimator) {
 }
 
 
-char S_Win_e::getSize() const { return unitChoice; }
+char S_Win_e::getUnit() const { return unitChoice; }
 double S_Win_e::getHeight() const { if (inputInInches){return height * 12.0;} return height;}
 double S_Win_e::getWidth() const  { if (inputInInches){return width * 12.0;} return width;}
 int S_Win_e::getCollarType() const { return collarType; }

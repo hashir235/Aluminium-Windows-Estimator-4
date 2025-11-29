@@ -349,7 +349,7 @@ void SCM_Win_f::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
-char SCM_Win_f::getSize() const {return unitChoice;}
+char SCM_Win_f::getUnit() const {return unitChoice;}
 double SCM_Win_f::getHeight() const { return height;}
 double SCM_Win_f::getWidth() const { return width;}
 double SCM_Win_f::getRightWidth() const { return rightWidth; }

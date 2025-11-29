@@ -109,7 +109,7 @@ bool A_Win_e::inputDetails() {
 
     // 6. Arch
     while (true) {
-        std::cout << "Enter Right Width (0 = cancel): ";
+        std::cout << "Enter Arch/Curve (0 = cancel): ";
         if (std::cin >> arch) {
             if (arch == 0) {
                 std::cout << "⚠ Entry cancelled!\n";
@@ -139,7 +139,7 @@ bool A_Win_e::inputDetails() {
 
     // 6. Width
     while (true) {
-        std::cout << "Enter Right Width (0 = cancel): ";
+        std::cout << "Enter Width (0 = cancel): ";
         if (std::cin >> width) {
             if (width == 0) {
                 std::cout << "⚠ Entry cancelled!\n";
@@ -262,7 +262,7 @@ void A_Win_e::sendToEstimator(EstimateLengthManager& estimator) {
     estimator.addWindowSections(label, sectionMap);
 }
 
-char A_Win_e::getSize() const {return unitChoice;}
+char A_Win_e::getUnit() const {return unitChoice;}
 double A_Win_e::getHeight() const { if (inputInInches) {return height * 12.0;} return height;}
 double A_Win_e::getWidth() const {if (inputInInches){return width * 12.0;} return width;}
 double A_Win_e::getArch() const { if (inputInInches){return arch * 12.0;} return arch; }

@@ -411,7 +411,7 @@ double AutoRatesManager::computeAndStoreTotals(vector<SectionSummary>& sections)
 
 //-------------------- Generate material_table.txt --------------------
 
-void AutoRatesManager::generateMaterialTxt(const vector<SectionSummary>& sections) {
+void AutoRatesManager::generateMaterialTxt(const vector<SectionSummary>& sections , int mod) {
 
     // ✔ Corrected path + file name
     ofstream file("data/Temp_material.txt", ios::out | ios::trunc);
@@ -430,7 +430,8 @@ void AutoRatesManager::generateMaterialTxt(const vector<SectionSummary>& section
         grandTotal += s.totalPrice;
     }
 
-    file << "Final Aluminum Section Cost Table\n";
+    if       (mod == 1){file << " Estimated Aluminum Section Cost Report\n";
+    }else if (mod == 2){file << " Fabricated Aluminum Section Cost Report\n";}   
     file << left << setw(12) << "Section"
          << " | " << setw(30) << "Lengths Used"
          << " | " << setw(9) << "Total ft"
